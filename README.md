@@ -45,7 +45,6 @@ Cyber Squad/
   Day4/  Day4_slides.html  Day4.ipynb
   Day5/  Day5_slides.html  Day5.ipynb
   resources/    (supplementary handouts: breach studies, phishing packet, cipher challenges, CTF packet)
-  archive/      (earlier source materials, kept for reference)
 ```
 
 ## For instructors
