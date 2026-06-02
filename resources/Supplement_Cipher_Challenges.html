@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Cipher Challenges - Cyber Squad 2026</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;color:#16223a;max-width:860px;margin:24px auto;padding:0 20px;line-height:1.55}
+h1{font-size:28px;margin-bottom:2px}h2{font-size:20px;border-bottom:2px solid #7c3aed;padding-bottom:4px;margin-top:26px;color:#6d28d9}
+.sub{color:#5b6b85;margin-top:0}
+.ch{border:1px solid #cbd5e1;border-radius:10px;padding:10px 16px;margin:12px 0;page-break-inside:avoid}
+.ch .t{font-weight:700;color:#6d28d9}
+.ct{font-family:Consolas,monospace;background:#0f172a;color:#e6edf7;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:15px;letter-spacing:1px}
+.note{background:#faf5ff;border-left:4px solid #7c3aed;padding:8px 14px;border-radius:8px;font-size:14px}
+.key{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 16px;margin-top:18px}
+code{background:#eef2f7;border:1px solid #e2e8f0;border-radius:4px;padding:0 5px;font-family:Consolas,monospace}
+@media print{.key{page-break-before:always}}
+</style></head><body>
+<h1>Cipher Challenges</h1>
+<p class="sub">Cyber Squad 2026 - Day 3 Lab: Crack the Code. Work in teams. Tools allowed: pencil, the cipher wheel, and Colab.</p>
+<div class="note"><b>Reminder:</b> a Caesar cipher shifts each letter by a fixed amount. A Vigenere cipher uses a repeating keyword. Atbash flips the alphabet (A becomes Z). Base64 is encoding, not encryption - anyone can reverse it.</div>
+
+<h2>Challenge 1 - Caesar (shift is 3)</h2>
+<div class="ch"><div class="t">Decrypt this message. The shift is 3.</div>
+<div class="ct">WKH HDJOH KDV ODQGHG</div></div>
+
+<h2>Challenge 2 - Caesar (shift unknown - crack it)</h2>
+<div class="ch"><div class="t">No key given. Use frequency analysis: E, T, A, O are the most common English letters.</div>
+<div class="ct">KWJVZJSHD FSFQDXNX GWJFPX XNRUQJ HNUMJWX</div></div>
+
+<h2>Challenge 3 - Vigenere (keyword: KEY)</h2>
+<div class="ch"><div class="t">Each letter is shifted by the matching letter of the repeating keyword KEY.</div>
+<div class="ct">KXRKGI KX BKAL</div></div>
+
+<h2>Challenge 4 - Atbash (mirror the alphabet)</h2>
+<div class="ch"><div class="t">A becomes Z, B becomes Y, and so on. The cipher is its own reverse.</div>
+<div class="ct">SVOOL DLIOW</div></div>
+
+<h2>Challenge 5 - Base64 (decode, do not "decrypt")</h2>
+<div class="ch"><div class="t">Spot it by the trailing <code>=</code>. Use <code>base64.b64decode(...)</code> in Colab.</div>
+<div class="ct">RkxBR3tjcnlwdG9faXNfZnVufQ==</div></div>
+
+<h2>Build Your Own</h2>
+<p>Encode a short message to a teammate using the cipher wheel with a shift of your choice. Swap, and try to crack each other's without being told the shift.</p>
+
+<div class="key">
+<h2>Answer Key (for instructors)</h2>
+<p><b>Challenge 1:</b> <code>THE EAGLE HAS LANDED</code> (shift back 3).</p>
+<p><b>Challenge 2:</b> <code>FREQUENCY ANALYSIS BREAKS SIMPLE CIPHERS</code> (the shift was 5; the most common ciphertext letter J maps back to E).</p>
+<p><b>Challenge 3:</b> <code>ATTACK AT DAWN</code> (keyword KEY).</p>
+<p><b>Challenge 4:</b> <code>HELLO WORLD</code> (Atbash).</p>
+<p><b>Challenge 5:</b> <code>FLAG{crypto_is_fun}</code> (Base64 decode).</p>
+<p><b>Teaching point:</b> Challenges 1, 3, and 4 use a key; you still cracked 2 without one. That is why short keys and simple ciphers are unsafe, and why modern keys are huge.</p>
+</div>
+</body></html>

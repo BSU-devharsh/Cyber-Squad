@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Cipher Wheel - Cyber Squad 2026</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;color:#16223a;max-width:820px;margin:20px auto;padding:0 20px;text-align:center}
+h1{font-size:26px;margin-bottom:0}.sub{color:#5b6b85;margin-top:2px}
+.wheels{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.cap{font-weight:700;color:#7c3aed}
+ol{text-align:left;max-width:640px;margin:14px auto;font-size:14.5px;line-height:1.6}
+@media print{button{display:none}}
+</style></head><body>
+<h1>Build Your Own Cipher Wheel</h1>
+<p class="sub">Cyber Squad 2026 - Day 3. Print this page, cut out both disks, and pin them at the center.</p>
+<div class="wheels">
+<div><div class="cap">Outer disk (fixed - plaintext)</div><svg id="outer" width="300" height="300"></svg></div>
+<div><div class="cap">Inner disk (rotates - ciphertext)</div><svg id="inner" width="240" height="240"></svg></div>
+</div>
+<ol>
+<li>Print this page. Cut out the large outer disk and the smaller inner disk.</li>
+<li>Place the small disk on top of the large one, centers aligned. Push a split pin (brad) through both centers so the inner disk can spin.</li>
+<li>To encrypt with a shift of 3, turn the inner disk so its A points at the outer D. Now read inner-to-outer.</li>
+<li>To decrypt, line up the same shift and read outer-to-inner.</li>
+<li>Pick a secret shift, encode a message, and challenge a teammate to crack it without the shift.</li>
+</ol>
+<button onclick="window.print()">Print this page</button>
+<script>
+function wheel(id,R,r,big){
+ const svg=document.getElementById(id),cx=R+10,cy=R+10,N=26;
+ svg.setAttribute('viewBox',`0 0 ${2*(R+10)} ${2*(R+10)}`);
+ let s=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff" stroke="#7c3aed" stroke-width="2"/>`+
+       `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#cbd5e1"/>`+
+       `<circle cx="${cx}" cy="${cy}" r="3" fill="#7c3aed"/>`;
+ for(let i=0;i<N;i++){
+   const ang=(i/N)*2*Math.PI - Math.PI/2;
+   const rr=(R+r)/2;
+   const x=cx+rr*Math.cos(ang), y=cy+rr*Math.sin(ang)+5;
+   const tick1x=cx+R*Math.cos(ang+Math.PI/N), tick1y=cy+R*Math.sin(ang+Math.PI/N);
+   const tick2x=cx+r*Math.cos(ang+Math.PI/N), tick2y=cy+r*Math.sin(ang+Math.PI/N);
+   s+=`<line x1="${tick2x}" y1="${tick2y}" x2="${tick1x}" y2="${tick1y}" stroke="#e2e8f0"/>`;
+   s+=`<text x="${x}" y="${y}" text-anchor="middle" font-size="${big?16:13}" font-family="Consolas,monospace" font-weight="700" fill="#16223a">${String.fromCharCode(65+i)}</text>`;
+ }
+ svg.innerHTML=s;
+}
+wheel('outer',140,108,true);
+wheel('inner',110,80,false);
+</script>
+</body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>CTF Packet - Cyber Squad 2026</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;color:#16223a;max-width:880px;margin:24px auto;padding:0 20px;line-height:1.55}
+h1{font-size:28px;margin-bottom:2px}h2{font-size:19px;margin-top:24px;color:#be123c;border-bottom:2px solid #e11d48;padding-bottom:3px}
+.sub{color:#5b6b85;margin-top:0}
+.ch{border:1px solid #cbd5e1;border-radius:9px;padding:9px 14px;margin:9px 0;page-break-inside:avoid}
+.ch .id{font-weight:700;color:#be123c}.pts{float:right;background:#fee2e2;color:#b91c1c;border-radius:6px;padding:1px 8px;font-size:12px;font-weight:700}
+.ct{font-family:Consolas,monospace;background:#0f172a;color:#e6edf7;border-radius:7px;padding:6px 10px;margin:6px 0;font-size:14px}
+.rules{background:#eff6ff;border-left:4px solid #2563eb;padding:8px 14px;border-radius:8px;font-size:14px}
+.key{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 16px;margin-top:18px}
+code{background:#eef2f7;border:1px solid #e2e8f0;border-radius:4px;padding:0 5px;font-family:Consolas,monospace}
+@media print{.key{page-break-before:always}}
+</style></head><body>
+<h1>Capture the Flag Packet</h1>
+<p class="sub">Cyber Squad 2026 - Day 5. Flags look like <code>FLAG{...}</code>. Open book. Harder challenges are worth more.</p>
+<div class="rules"><b>Rules:</b> Work solo or with your team. You may use notes, this course, and the internet. Attacking the camp Wi-Fi or any real system is forbidden - only these challenges and the Cyber Range targets are in scope. Submit each flag to the instructor.</div>
+
+<h2>Cryptography</h2>
+<div class="ch"><span class="pts">100</span><span class="id">CR1</span> - Caesar shift of 3. Decode it; the flag is the decoded phrase in lowercase with underscores.
+<div class="ct">Fdhvdu vdlg whq, euxwh!</div></div>
+<div class="ch"><span class="pts">100</span><span class="id">CR2</span> - This is Base64, not encryption. Decode it.
+<div class="ct">RkxBR3tiNjRfaXNfbm90X2NyeXB0b30=</div></div>
+<div class="ch"><span class="pts">150</span><span class="id">CR3</span> - More Base64. Decode for the flag.
+<div class="ct">RkxBR3toZWxsb19zcXVhZH0=</div></div>
+
+<h2>Password</h2>
+<div class="ch"><span class="pts">100</span><span class="id">PW1</span> - Crack this MD5 hash (try an online hash database). Flag is <code>FLAG{the_password}</code>.
+<div class="ct">5f4dcc3b5aa765d61d8327deb882cf99</div></div>
+<div class="ch"><span class="pts">150</span><span class="id">PW2</span> - Crack this MD5 hash.
+<div class="ct">0d107d09f5bbe40cade3de5c71e9e9b7</div></div>
+
+<h2>OSINT</h2>
+<div class="ch"><span class="pts">100</span><span class="id">OS1</span> - Using only the official Bowie State University website, find the current Chair of the Department of Computer Science. (Instructor verifies the answer on the day.)</div>
+<div class="ch"><span class="pts">75</span><span class="id">OS2</span> - Using this course's materials, what city and ZIP code is the camp located in? Flag format <code>FLAG{city_zip}</code>.</div>
+
+<h2>Web</h2>
+<div class="ch"><span class="pts">150</span><span class="id">WEB1</span> - Open the practice login page in the Cyber Range. View the page source (F12 or right-click, View Source) and find the flag hidden in an HTML comment.</div>
+<div class="ch"><span class="pts">200</span><span class="id">WEB2</span> - The practice login form does not validate input. Log in without a real password using a classic SQL injection, then read the flag shown.</div>
+
+<h2>Forensics</h2>
+<div class="ch"><span class="pts">150</span><span class="id">FOR1</span> - A flag is hidden inside the provided image file. Try an online steganography tool, or run <code>strings image.png</code> in Kali.</div>
+
+<h2>Trivia</h2>
+<div class="ch"><span class="pts">50</span><span class="id">TR1</span> - What does the "C" in the CIA Triad stand for? Flag <code>FLAG{the_word}</code>.</div>
+<div class="ch"><span class="pts">50</span><span class="id">TR2</span> - Name the US federal law that makes accessing a computer without authorization a crime (the acronym). Flag <code>FLAG{acronym}</code>.</div>
+
+<div class="key">
+<h2>Solution Key (for instructors)</h2>
+<p><b>CR1:</b> shift back 3 gives "Caesar said ten, brute!" Flag <code>FLAG{caesar_said_ten}</code>.</p>
+<p><b>CR2:</b> Base64 decode gives <code>FLAG{b64_is_not_crypto}</code>.</p>
+<p><b>CR3:</b> Base64 decode gives <code>FLAG{hello_squad}</code>.</p>
+<p><b>PW1:</b> the MD5 of <code>password</code>. Flag <code>FLAG{password}</code>.</p>
+<p><b>PW2:</b> the MD5 of <code>letmein</code>. Flag <code>FLAG{letmein}</code>.</p>
+<p><b>OS1:</b> instructor sets and verifies the current Chair's name from the official site on the day (do not pre-print, since roles change).</p>
+<p><b>OS2:</b> <code>FLAG{washington_dc_20003}</code> (from the course cover and contact info).</p>
+<p><b>WEB1 / WEB2:</b> instructor places these flags in the practice page. Suggested: WEB1 hidden comment <code>FLAG{view_source_wins}</code>; WEB2 after <code>' OR '1'='1</code> login, show <code>FLAG{sqli_always_true}</code>.</p>
+<p><b>FOR1:</b> instructor embeds a flag in the image (e.g., LSB steganography or appended text), suggested <code>FLAG{hidden_in_pixels}</code>.</p>
+<p><b>TR1:</b> <code>FLAG{confidentiality}</code>. &nbsp; <b>TR2:</b> <code>FLAG{cfaa}</code>.</p>
+<p><b>Setup note:</b> the crypto, password, and trivia flags work as printed. The OSINT, web, and forensics challenges need the instructor to place the live flag in the Cyber Range environment before the contest.</p>
+</div>
+</body></html>

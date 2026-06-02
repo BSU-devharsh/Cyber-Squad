@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Breach Case Studies - Cyber Squad 2026</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;color:#16223a;max-width:880px;margin:24px auto;padding:0 20px;line-height:1.55}
+h1{font-size:28px;margin-bottom:2px}h2{font-size:20px;border-bottom:2px solid #2563eb;padding-bottom:4px;margin-top:26px;color:#1d4ed8}
+.sub{color:#5b6b85;margin-top:0}
+.cs{border:1px solid #cbd5e1;border-radius:10px;padding:12px 18px;margin:14px 0;page-break-inside:avoid}
+.cs h3{margin:0 0 6px;color:#1d4ed8}
+.facts{font-size:14.5px}
+table{border-collapse:collapse;width:100%;margin:8px 0}th,td{border:1px solid #cbd5e1;padding:6px 10px;text-align:left;font-size:13.5px}th{background:#2563eb;color:#fff}
+.q{background:#eff6ff;border-left:4px solid #2563eb;padding:8px 14px;border-radius:8px;font-size:14px;margin-top:8px}
+.key{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 16px;margin-top:18px}
+@media print{.cs{page-break-inside:avoid}.key{page-break-before:always}}
+</style></head><body>
+<h1>Breach Case Studies</h1>
+<p class="sub">Cyber Squad 2026 - Day 1 Lab: Spot the Vulnerability. Each team takes one card and answers the four questions.</p>
+<div class="q"><b>For your case, identify:</b> (a) the ASSET, (b) the VULNERABILITY, (c) the THREAT that exploited it, (d) which CIA pillar broke, and (e) one CONTROL that could have prevented or limited it. Present a 2-minute summary.</div>
+
+<div class="cs"><h3>1. Equifax (2017)</h3>
+<p class="facts">Equifax, a major US credit bureau, exposed the personal data of about <b>147 million</b> people: names, Social Security numbers, birth dates, and addresses. Attackers got in through a known flaw in the Apache Struts web software. A patch had been available for about <b>two months</b> but was not applied. Attackers stayed in the network for roughly 76 days.</p></div>
+
+<div class="cs"><h3>2. Yahoo (2013-2014, disclosed 2016)</h3>
+<p class="facts">Yahoo suffered the largest breach by user count in history: <b>all 3 billion</b> user accounts were affected. Stolen data included names, email addresses, phone numbers, security questions, and password hashes (some using the weak MD5 algorithm). The breach was disclosed years later, during Yahoo's sale to Verizon, which reduced the sale price.</p></div>
+
+<div class="cs"><h3>3. Target (2013)</h3>
+<p class="facts">Attackers stole about <b>40 million</b> credit and debit card numbers (and personal data on up to 70 million people) during the holiday season. They first got in using network credentials stolen from a <b>third-party HVAC vendor</b>, then installed malware on the in-store checkout (point-of-sale) systems to skim card data.</p></div>
+
+<div class="cs"><h3>4. SolarWinds (2020)</h3>
+<p class="facts">Attackers (a nation-state group) secretly inserted malicious code into a software update for SolarWinds Orion, a network-management tool. About <b>18,000</b> organizations downloaded the poisoned update, including US government agencies and large companies. This is called a <b>supply-chain attack</b> - compromise the trusted vendor to reach everyone downstream.</p></div>
+
+<div class="key">
+<h2>Answer Key (for instructors)</h2>
+<table><tr><th>Case</th><th>Asset</th><th>Vulnerability</th><th>CIA broken</th><th>Control that would help</th></tr>
+<tr><td>Equifax</td><td>147M credit records</td><td>Unpatched Apache Struts flaw</td><td>Confidentiality</td><td>Timely patching; network segmentation; monitoring</td></tr>
+<tr><td>Yahoo</td><td>3B account records</td><td>Weak password hashing (MD5), broad access</td><td>Confidentiality</td><td>Strong salted hashing; MFA; faster detection and disclosure</td></tr>
+<tr><td>Target</td><td>40M card numbers</td><td>Over-trusted third-party vendor access</td><td>Confidentiality</td><td>Network segmentation; least privilege for vendors; POS monitoring</td></tr>
+<tr><td>SolarWinds</td><td>18,000 networks</td><td>Trusted software-update channel</td><td>Confidentiality, Integrity</td><td>Code-signing checks; supply-chain security; zero-trust</td></tr></table>
+<p><b>Recurring pattern:</b> unpatched systems, stolen or over-trusted credentials, weak crypto, and trusted third parties. The threat in each case was a skilled attacker; the missing controls were ordinary, affordable best practices.</p>
+</div>
+</body></html>
