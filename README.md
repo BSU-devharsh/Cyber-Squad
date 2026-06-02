@@ -44,10 +44,17 @@ Cyber Squad/
   Day3/  Day3_slides.html  Day3.ipynb
   Day4/  Day4_slides.html  Day4.ipynb
   Day5/  Day5_slides.html  Day5.ipynb
-  instructor/   (setup guide, safety and ethics, rubric, glossary)
-  resources/    (supplementary handouts)
+  resources/    (supplementary handouts: breach studies, phishing packet, cipher challenges, CTF packet)
   archive/      (earlier source materials, kept for reference)
 ```
+
+## For instructors
+
+**Before the camp:** create an educator account at https://www.uscyberrange.org/, review pricing and plans, and open the Courseware Repository and Course 6302 Cybersecurity Fundamentals. In the Exercise Area, pick each day's environment: Day 1 a basic Linux VM; Day 2 Linux with command-line tools; Day 3 Wireshark with two in-range hosts; Day 4 an isolated vulnerable web app; Day 5 a CTF or capstone plus a log set for the blue-team round. Do a full dry run and confirm students can log in.
+
+**Assessment:** score each item 0 to 3 (not yet, emerging, proficient, strong). Track the daily practical checks (for example, Day 2 produces two different salted hashes; Day 4 lists three OWASP items with defenses), the knowledge checks built into each deck, and the Day 5 capstone (CTF flags, blue-team triage, showcase). Suggested weighting: daily practicals 40, knowledge checks 20, capstone 30, participation and ethics 10.
+
+The safety-and-ethics agreement and a full glossary are now built into `Interactive_Slides.html` (appendix slides).
 
 ## Citation
 See `CITATION.cff`. Repository: https://github.com/BSU-devharsh/Cyber-Squad
