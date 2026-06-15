@@ -89,6 +89,22 @@
   .badge{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--accent);color:var(--accent);border-radius:999px;padding:6px 16px;font-family:var(--mono);font-size:12.5px;font-weight:700}
   svg{max-width:100%}
   @media print{.slide{display:block!important;position:relative;height:auto;page-break-after:always}.inner{transform:none!important;zoom:1!important}.ctrl,.menub,.pbar{display:none}}
+
+/* --- responsive + accessible (added) --- */
+.slide{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.inner{padding-bottom:88px}
+.menub,.ctrl button{min-height:44px}
+.ctrl button{font-size:14px;padding:10px 14px;border-radius:8px;background:#fff;border:1px solid var(--line);color:var(--ink);cursor:pointer}
+@media (max-width:860px){
+ .inner{padding:16px 14px 96px}
+ h1{font-size:27px;line-height:1.15} h2{font-size:20px} h3{font-size:16px}
+ p,li{font-size:16px;line-height:1.5} .lead{font-size:18px}
+ .grid{gap:10px} .g2,.g3,.g2a,.g2b{grid-template-columns:1fr!important}
+ table{font-size:12.5px} .kick{font-size:11px}
+ .menub{top:8px;left:8px} #dayDeckNav{top:8px;right:8px} .ctrl{right:10px;bottom:10px}
+ #toc{padding:60px 6vw}
+}
+svg{max-width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -106,10 +122,10 @@
   </div>
 </div>
 <div class="pbar" id="pbar"></div>
-<button class="menub" onclick="toggleTOC()">CONTENTS</button>
+<button class="menub" onclick="toggleTOC()" aria-label="Open course contents">CONTENTS</button>
 <div id="toc"><button class="menub close" onclick="toggleTOC()">CLOSE</button><h2>Course contents</h2><div id="toclist"></div></div>
 <div id="deck"></div>
-<div class="ctrl"><button onclick="go(-1)">&#9664; Prev</button><button onclick="go(1)">Next &#9654;</button></div>
+<div class="ctrl"><button onclick="go(-1)" aria-label="Previous slide">&#9664; Prev</button><button onclick="go(1)" aria-label="Next slide">Next &#9654;</button></div>
 
 <script>
 /* ============ SVG DIAGRAM + ILLUSTRATION LIBRARY ============ */
@@ -810,6 +826,18 @@ window.addEventListener('keydown', e => {
 
 /* Trigger setup on engine completion initialization */
 window.onload = initDeck;
+
+/* --- touch swipe + scroll reset + a11y (added) --- */
+(function(){
+ try{
+  var d=document.getElementById('deck');
+  if(d){var sx=null,sy=null;
+   d.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+   d.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){go(dx<0?1:-1);}sx=null;},{passive:true});}
+  if(typeof go==='function'){var _g=go;go=function(n){_g(n);var a=document.querySelector('.slide.active');if(a)a.scrollTop=0;};window.go=go;}
+  if(typeof jumpTo==='function'){var _j=jumpTo;jumpTo=function(i){_j(i);var a=document.querySelector('.slide.active');if(a)a.scrollTop=0;};window.jumpTo=jumpTo;}
+ }catch(e){}
+})();
 </script>
 </body>
 </html>

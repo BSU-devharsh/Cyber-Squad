@@ -37,6 +37,23 @@
   .progress > div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s}
   a{color:var(--accent)}
 .slide h3{font-size:18px;margin:14px 0 6px;color:var(--accent)}.slide table{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}.slide th,.slide td{border:1px solid #dfe6f5;padding:6px 10px;text-align:left;vertical-align:top}.slide th{background:#f1f5ff}.callout{background:#eef6ff;border:1px solid #c7d4f0;border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;margin:12px 0}.slide hr{border:none;border-top:1px solid #dfe6f5;margin:16px 0}.partbadge{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;letter-spacing:.04em}.roadmap{font-size:18px;line-height:1.7}.do{background:#fff7ed;border:1px solid #fed7aa;border-left:4px solid #ea7a17;border-radius:10px;padding:14px 16px;margin:12px 0;font-size:17px}.range{background:#ecfeff;border:1px solid #a5f3fc;border-left:4px solid #0891b2;border-radius:10px;padding:14px 16px;margin:12px 0;font-size:16px}
+
+/* --- responsive + accessible (added) --- */
+.slide .grid{display:grid;gap:14px}
+.slide .g2{grid-template-columns:1fr 1fr}
+.slide .g3{grid-template-columns:repeat(3,1fr)}
+button.nav-btn{min-height:44px}
+svg{max-width:100%;height:auto}
+@media (max-width:860px){
+ .stage{padding:14px}
+ .slide{padding:18px;border-radius:14px}
+ h1{font-size:26px} h2{font-size:21px} h3{font-size:16px}
+ p,li{font-size:16px}
+ .opt{padding:14px 16px;font-size:16px}
+ button.nav-btn{padding:14px 18px;font-size:16px}
+ .slide .grid,.slide .g2,.slide .g3{grid-template-columns:1fr}
+ table{font-size:12.5px}
+}
 </style>
 </head>
 <body>
@@ -53,9 +70,9 @@ while n&lt;3:
     print(n); n=n+1</pre></div><div class='slide'><h2>More Linux commands</h2><p class='muted'>Quick reference</p><table><tr><th>Command</th><th>Does</th></tr><tr><td>mkdir</td><td>make a folder</td></tr><tr><td>cp / mv</td><td>copy / move</td></tr><tr><td>grep</td><td>search text</td></tr><tr><td>man</td><td>read the manual</td></tr></table></div><div class='slide'><h2>File permissions</h2><p class='muted'>Who can read, write, run</p><p>Linux files have read, write, and execute permissions for owner, group, and others. <code>ls -l</code> shows them; <code>chmod</code> changes them.</p></div><div class='slide'><h2>Common ports</h2><p class='muted'>Services by number</p><table><tr><th>Port</th><th>Service</th></tr><tr><td>22</td><td>SSH</td></tr><tr><td>80</td><td>HTTP</td></tr><tr><td>443</td><td>HTTPS</td></tr><tr><td>53</td><td>DNS</td></tr></table></div><div class='slide'><h2>Packets and routing</h2><p class='muted'>How data travels</p><p>Data is split into packets with address headers, routed hop by hop across switches and routers, then reassembled in order at the destination.</p></div><div class='slide'><h2>Knowledge check</h2><p>Which command makes a new folder?</p><button class='opt' data-c='1' onclick="choose(this,true,'mkdir makes a directory.')">mkdir</button><button class='opt' data-c='0' onclick="choose(this,false,'mkdir makes a directory.')">cat</button><button class='opt' data-c='0' onclick="choose(this,false,'mkdir makes a directory.')">ls</button><div class='feedback'></div></div><div class='slide'><p class='partbadge'>PART 8 OF 8</p><h1 style='margin-top:14px'>Wrap up</h1><p style='font-size:20px;color:var(--muted)'>Recap and reflect.</p><p class='muted'>This part is 2 slides. Press Next to begin.</p></div><div class='slide'><h2>Recap</h2><p>Today you did a Python exercise, a Cyber Range lab, and a game on Linux and Networking Foundations.</p></div><div class='slide'><h2>Reflection</h2><p>Write one sentence: which of today's three activities taught you the most, and why?</p></div></div>
   <div class="progress"><div id="bar"></div></div>
   <div class="nav">
-    <button class="nav-btn" id="prev">Back</button>
+    <button class="nav-btn" id="prev" aria-label="Previous slide">Back</button>
     <div class="dots" id="dots"></div>
-    <button class="nav-btn" id="next">Next</button>
+    <button class="nav-btn" id="next" aria-label="Next slide">Next</button>
   </div>
 </div>
 <script>
@@ -83,6 +100,12 @@ while n&lt;3:
       [...parent.querySelectorAll('.opt')].forEach(b=>{if(b.dataset.c==='1')b.classList.add('correct');});}
   }
   render();
+
+(function(){var sx=null,sy=null;
+ document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+ document.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){var b=document.getElementById(dx<0?'next':'prev');if(b)b.click();}sx=null;},{passive:true});
+ ['prev','next'].forEach(function(id){var b=document.getElementById(id);if(b){b.addEventListener('click',function(){setTimeout(function(){window.scrollTo(0,0);},0);});}});
+})();
 </script>
 </body>
 </html>

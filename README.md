@@ -7,6 +7,8 @@ Every day has three activities: **one Python exercise, one Cyber Range lab, and 
 A free, browser-only edition that uses only public tools is provided separately in the `cyberquest-camp` folder.
 
 ## How it is organized
+The slide decks are responsive and accessible: on a phone or tablet, swipe left and right to move between slides; on a desktop, use the on-screen Prev and Next buttons, the arrow keys, or the Contents menu. Long slides scroll, and layouts collapse to a single column on small screens.
+
 - `Interactive_Slides.html` is the **main course deck (150 slides)**: the full lecture with bonus content, figures, and exercises. It opens with how the camp works and, at marked points, sends you to that day's deck, notebook, and Cyber Range lab. A Day decks menu (top right) links to each day deck.
 - Each `DayN/` folder holds exactly two files:
   - `DayN_slides.html` - a **50-slide day deck** (overview, lecture, Python exercise, Cyber Range lab, game, quiz, wrap up).
@@ -44,6 +46,7 @@ Cyber Squad/
   Day3/  Day3_slides.html  Day3.ipynb
   Day4/  Day4_slides.html  Day4.ipynb
   Day5/  Day5_slides.html  Day5.ipynb
+  resources/case-studies/   (four one-page breach studies with sources)
   resources/    (supplementary handouts: breach studies, phishing packet, cipher challenges, CTF packet)
 ```
 
