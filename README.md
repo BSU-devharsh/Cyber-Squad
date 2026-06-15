@@ -1,5 +1,7 @@
 # Cyber Squad: A Five-Day Cybersecurity Camp on the U.S. Cyber Range
 
+**Live site:** https://bsu-devharsh.github.io/Cyber-Squad/
+
 A hands-on, instructor-led cybersecurity summer camp for middle and high school students. It pairs the **U.S. Cyber Range** (operated by Virginia Tech) for safe, isolated, cloud-based labs with interactive slide decks, Python notebooks, and free security games.
 
 Every day has three activities: **one Python exercise, one Cyber Range lab, and one interactive game.**
