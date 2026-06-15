@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Squad - Cybersecurity Summer Camp</title>
+<style>
+ :root{--bg:#eef2fb;--card:#fff;--ink:#16203a;--muted:#5a6b8c;--accent:#2563eb;--accent2:#7c3aed;--line:#dfe6f5}
+ *{box-sizing:border-box}
+ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);
+  background:radial-gradient(1200px 600px at 70% -10%,#dbe6ff,transparent),var(--bg);min-height:100vh}
+ .wrap{max-width:900px;margin:0 auto;padding:32px 18px 60px}
+ .badge{display:inline-block;background:var(--accent2);color:#fff;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.04em}
+ h1{font-size:clamp(28px,6vw,44px);margin:12px 0 6px;line-height:1.1}
+ .sub{color:var(--muted);font-size:clamp(15px,3.5vw,19px);max-width:60ch}
+ .lead-btn{display:inline-block;margin:18px 0 4px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:12px;min-height:44px;font-size:17px}
+ h2{font-size:20px;margin:30px 0 10px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+ .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(20,40,90,.06)}
+ .card h3{margin:0 0 4px;font-size:18px}
+ .card p{margin:0 0 12px;color:var(--muted);font-size:14px}
+ .links a{display:inline-block;margin:4px 8px 0 0;padding:9px 12px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:600;min-height:40px}
+ .deck{background:#eef3ff;color:#1d4ed8;border:1px solid #c7d4f0}
+ .nb{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+ .muted{color:var(--muted)} a{color:var(--accent)}
+ footer{margin-top:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <span class="badge">BOWIE STATE UNIVERSITY</span>
+ <h1>Cyber Squad</h1>
+ <p class="sub">A five-day cybersecurity summer camp for middle and high school students, built on the U.S. Cyber Range. Each day: one Python exercise, one Cyber Range lab, and one interactive game.</p>
+ <a class="lead-btn" href="Interactive_Slides.html">Open the main course deck (150 slides)</a>
+ <p class="muted" style="font-size:13px">Tip: swipe on a phone, or use the arrow keys / on-screen buttons on a computer.</p>
+
+ <h2>Day decks and notebooks</h2>
+ <div class="grid" id="grid"></div>
+
+ <h2>More</h2>
+ <div class="links">
+   <a class="deck" href="https://github.com/BSU-devharsh/Cyber-Squad">Source on GitHub</a>
+   <a class="deck" href="resources/case-studies/README.md">Case studies</a>
+   <a class="deck" href="README.md">README</a>
+ </div>
+
+ <footer>
+   Devharsh Trivedi, Ph.D., CISSP - Department of Computer Science, Bowie State University - Washington D.C., 20003.
+   Decks are responsive and run in any modern browser. Notebooks open free in Google Colab.
+ </footer>
+</div>
+<script>
+ var days=[
+  [1,"Linux and Networking Foundations"],
+  [2,"Accounts, Passwords, and Hashing"],
+  [3,"Cryptography and Traffic Analysis"],
+  [4,"Web Application Security"],
+  [5,"Capstone: CTF and Blue-Team Defense"]
+ ];
+ var repo="BSU-devharsh/Cyber-Squad";
+ var g=document.getElementById('grid');
+ days.forEach(function(d){
+  var n=d[0];
+  var el=document.createElement('div');el.className='card';
+  el.innerHTML='<h3>Day '+n+'</h3><p>'+d[1]+'</p><div class="links">'+
+   '<a class="deck" href="Day'+n+'/Day'+n+'_slides.html">Slides (50)</a>'+
+   '<a class="nb" target="_blank" rel="noopener" href="https://colab.research.google.com/github/'+repo+'/blob/main/Day'+n+'/Day'+n+'.ipynb">Notebook in Colab</a></div>';
+  g.appendChild(el);
+ });
+</script>
+</body>
+</html>
