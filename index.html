@@ -24,6 +24,19 @@
  .nb{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
  .muted{color:var(--muted)} a{color:var(--accent)}
  footer{margin-top:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+ #readme-body h1,#readme-body h2,#readme-body h3{margin-top:1.1em;margin-bottom:.4em}
+ #readme-body h1{font-size:22px}#readme-body h2{font-size:18px}#readme-body h3{font-size:16px}
+ #readme-body table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+ #readme-body th,#readme-body td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+ #readme-body th{background:#f1f5fe;font-weight:600}
+ #readme-body tr:nth-child(even) td{background:#f8faff}
+ #readme-body code{background:#f1f5fe;border-radius:4px;padding:1px 5px;font-size:13px;font-family:monospace}
+ #readme-body pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:14px;overflow-x:auto}
+ #readme-body pre code{background:none;padding:0;color:inherit}
+ #readme-body ul,#readme-body ol{padding-left:24px}
+ #readme-body a{color:var(--accent)}
+ #readme-body hr{border:none;border-top:1px solid var(--line);margin:18px 0}
+ #readme-body p{margin:.5em 0}
 </style>
 </head>
 <body>
@@ -37,11 +50,18 @@
  <h2>Day decks and notebooks</h2>
  <div class="grid" id="grid"></div>
 
- <h2>More</h2>
+ <h2>Resources</h2>
  <div class="links">
-   <a class="deck" href="https://github.com/BSU-devharsh/Cyber-Squad">Source on GitHub</a>
-   <a class="deck" href="resources/case-studies/README.md">Case studies</a>
-   <a class="deck" href="README.md">README</a>
+   <a class="deck" href="resources/Lab_Tutorial.html">Lab Tutorial (Days 3-5)</a>
+   <a class="deck" href="resources/Supplement_CTF_Packet.html">CTF Packet</a>
+   <a class="deck" href="resources/Supplement_Cipher_Challenges.html">Cipher Challenges</a>
+   <a class="deck" href="resources/Supplement_Phishing_Email_Packet.html">Phishing Packet</a>
+   <a class="deck" href="resources/Supplement_Breach_Case_Studies.html">Breach Case Studies</a>
+ </div>
+
+ <h2 id="guide" style="margin-top:28px">Camp guide</h2>
+ <div id="readme-body" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;font-size:15px;line-height:1.7;color:var(--ink)">
+   <p style="color:var(--muted)">Loading guide...</p>
  </div>
 
  <footer>
@@ -49,7 +69,24 @@
    Decks are responsive and run in any modern browser. Notebooks open free in Google Colab.
  </footer>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js" integrity="sha512-rfX4p3RNnZA9m1Y9YZfFEDNp8TBGjnGs4S30xRiScFiSep4TLKGWiOGLbDFqcHXFbWs5zGgQJl84P8n1ssbw==" crossorigin="anonymous"></script>
 <script>
+ (function(){
+  var box=document.getElementById('readme-body');
+  fetch('https://bsu-devharsh.github.io/Cyber-Squad/README.md')
+   .then(function(r){return r.text();})
+   .then(function(md){
+    // strip the h1 (already in page header) and Citation/License sections to keep it concise
+    box.innerHTML=marked.parse(md);
+    // rewrite relative .md links to absolute github.io HTML equivalents where possible
+    box.querySelectorAll('a[href]').forEach(function(a){
+     var h=a.getAttribute('href');
+     if(h&&!h.startsWith('http')&&!h.startsWith('#'))
+      a.setAttribute('href','https://bsu-devharsh.github.io/Cyber-Squad/'+h);
+    });
+   })
+   .catch(function(){box.innerHTML='<p>Guide is available at <a href="https://bsu-devharsh.github.io/Cyber-Squad/README.md">README.md</a>.</p>';});
+ })();
  var days=[
   [1,"Linux and Networking Foundations"],
   [2,"Accounts, Passwords, and Hashing"],
