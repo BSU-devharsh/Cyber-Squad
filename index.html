@@ -37,6 +37,13 @@
  <h2>Day decks and notebooks</h2>
  <div class="grid" id="grid"></div>
 
+ <h2>More</h2>
+ <div class="links">
+   <a class="deck" href="https://github.com/BSU-devharsh/Cyber-Squad">Source on GitHub</a>
+   <a class="deck" href="resources/case-studies/README.md">Case studies</a>
+   <a class="deck" href="README.md">README</a>
+ </div>
+
  <footer>
    Devharsh Trivedi, Ph.D., CISSP - Department of Computer Science, Bowie State University - Bowie, MD, 20715.
    Decks are responsive and run in any modern browser. Notebooks open free in Google Colab.
@@ -57,7 +64,7 @@
   var el=document.createElement('div');el.className='card';
   el.innerHTML='<h3>Day '+n+'</h3><p>'+d[1]+'</p><div class="links">'+
    '<a class="deck" href="Day'+n+'/Day'+n+'_slides.html">Slides (55)</a>'+
-   '<a class="nb" target="_blank" rel="noopener" href="https://colab.research.google.com/github/'+repo+'/blob/main/Day'+n+'/Day'+n+'_student.ipynb">Notebook in Colab</a></div>';
+   '<a class="nb" target="_blank" rel="noopener" href="https://colab.research.google.com/github/'+repo+'/blob/main/Day'+n+'/Day'+n+'.ipynb">Notebook in Colab</a></div>';
   g.appendChild(el);
  });
 </script>
