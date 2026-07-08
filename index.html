@@ -23,6 +23,17 @@
  .deck{background:#eef3ff;color:#1d4ed8;border:1px solid #c7d4f0}
  .nb{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
  .muted{color:var(--muted)} a{color:var(--accent)}
+ .infobox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px 14px}
+ .inforow{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 20px;margin-bottom:14px}
+ .infoitem{display:flex;flex-direction:column;font-size:14px}
+ .infoitem b{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+ .infoitem span{color:var(--ink);font-weight:500}
+ .sched{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+ .sched th{background:#f1f5fe;font-weight:600;text-align:left;padding:7px 10px;border:1px solid var(--line)}
+ .sched td{padding:7px 10px;border:1px solid var(--line)}
+ .sched tr:nth-child(even) td{background:#f8faff}
+ .sched .lunch td{color:var(--muted)}
+ .daydate{font-size:13px;font-weight:400;color:var(--muted);margin-left:6px}
  footer{margin-top:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
  #readme-body h1,#readme-body h2,#readme-body h3{margin-top:1.1em;margin-bottom:.4em}
  #readme-body h1{font-size:22px}#readme-body h2{font-size:18px}#readme-body h3{font-size:16px}
@@ -43,12 +54,36 @@
 <div class="wrap">
  <span class="badge">BOWIE STATE UNIVERSITY</span>
  <h1>Cyber Squad</h1>
- <p class="sub">A five-day cybersecurity summer camp for middle and high school students, built on the U.S. Cyber Range. Each day: one Python exercise, one Cyber Range lab, and one interactive game.</p>
+ <p class="sub">A five-day cybersecurity summer camp for middle and high school students, built on the U.S. Cyber Range. July 13–17, 2026 at Bowie State University. Each day: one Python exercise, one Cyber Range lab, and one interactive game.</p>
  <a class="lead-btn" href="Interactive_Slides.html">Open the main course deck (150 slides)</a>
  <p class="muted" style="font-size:13px">Tip: swipe on a phone, or use the arrow keys / on-screen buttons on a computer.</p>
 
  <h2>Day decks and notebooks</h2>
  <div class="grid" id="grid"></div>
+
+ <h2>Camp details</h2>
+ <div class="infobox">
+  <div class="inforow">
+   <div class="infoitem"><b>Dates</b><span>July 13–17, 2026 (Mon–Fri)</span></div>
+   <div class="infoitem"><b>Arrival / Check-in</b><span>8:45–9:25 a.m.</span></div>
+   <div class="infoitem"><b>Camp Hours</b><span>9:25 a.m.–3:35 p.m.</span></div>
+   <div class="infoitem"><b>Pick-up</b><span>3:35–4:15 p.m.</span></div>
+   <div class="infoitem"><b>Location</b><span>Room 113B, First Floor, Computer Science Building</span></div>
+   <div class="infoitem"><b>Lunch</b><span>Buffet lunch provided daily</span></div>
+  </div>
+  <table class="sched">
+   <thead><tr><th>Time</th><th>Session</th><th>Slides</th></tr></thead>
+   <tbody>
+    <tr><td>9:25 – 12:05</td><td>Lectures &amp; Python exercises</td><td>Parts 1, 2, 3, 6</td></tr>
+    <tr class="lunch"><td>12:05 – 12:55</td><td>Lunch</td><td>—</td></tr>
+    <tr><td>12:55 – 1:45</td><td>Cyber Range labs</td><td>Part 4</td></tr>
+    <tr><td>1:45 – 2:35</td><td>Interactive game exercises</td><td>Parts 5, 7</td></tr>
+    <tr><td>2:35 – 3:25</td><td>Pair work &amp; presentations</td><td>Part 9</td></tr>
+    <tr><td>3:25 – 3:35</td><td>Wrap-up</td><td>Part 8</td></tr>
+   </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Students work in pairs on their presentation for four days and present on Day 5 (Friday). No fixed breaks — students may step out as needed.</p>
+ </div>
 
  <h2>Resources</h2>
  <div class="links">
@@ -88,18 +123,18 @@
    .catch(function(){box.innerHTML='<p>Guide is available at <a href="https://bsu-devharsh.github.io/Cyber-Squad/README.md">README.md</a>.</p>';});
  })();
  var days=[
-  [1,"Linux and Networking Foundations"],
-  [2,"Accounts, Passwords, and Hashing"],
-  [3,"Cryptography and Traffic Analysis"],
-  [4,"Web Application Security"],
-  [5,"Capstone: CTF and Blue-Team Defense"]
+  [1,"Linux and Networking Foundations","Mon, Jul 13"],
+  [2,"Accounts, Passwords, and Hashing","Tue, Jul 14"],
+  [3,"Cryptography and Traffic Analysis","Wed, Jul 15"],
+  [4,"Web Application Security","Thu, Jul 16"],
+  [5,"Capstone: CTF and Blue-Team Defense","Fri, Jul 17"]
  ];
  var repo="BSU-devharsh/Cyber-Squad";
  var g=document.getElementById('grid');
  days.forEach(function(d){
   var n=d[0];
   var el=document.createElement('div');el.className='card';
-  el.innerHTML='<h3>Day '+n+'</h3><p>'+d[1]+'</p><div class="links">'+
+  el.innerHTML='<h3>Day '+n+'<span class="daydate">'+d[2]+'</span></h3><p>'+d[1]+'</p><div class="links">'+
    '<a class="deck" href="Day'+n+'/Day'+n+'_slides.html">Slides (55)</a>'+
    '<a class="nb" target="_blank" rel="noopener" href="https://colab.research.google.com/github/'+repo+'/blob/main/Day'+n+'/Day'+n+'_student.ipynb">Notebook in Colab</a></div>';
   g.appendChild(el);
